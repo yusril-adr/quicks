@@ -21,7 +21,7 @@ import {
 const NavigationGroup: FC = () => {
   const [scopeTask, animateTask] = useAnimate();
   const [scopeInbox, animateInbox] = useAnimate();
-  const { isOpen, curr, prev } = useAppSelector(
+  const { isOpen, curr } = useAppSelector(
     (state) => state.navigationGroupReducer.value,
   );
 
@@ -36,17 +36,11 @@ const NavigationGroup: FC = () => {
   };
 
   const taskVariant = useMemo(() => {
-    if (!isOpen && curr === NavigationName.TASK) {
-      return {
-        opacity: [1, 0],
-        translateX: [175, 0],
-      };
-    }
-
     if (!isOpen) {
       return {
         opacity: [1, 0],
         translateX: [0, 175],
+        zIndex: 0,
       };
     }
 
@@ -71,17 +65,11 @@ const NavigationGroup: FC = () => {
   }, [isOpen, curr]);
 
   const inboxVariant = useMemo(() => {
-    if (!isOpen && curr === NavigationName.INBOX) {
-      return {
-        opacity: [1, 0],
-        translateX: [90, 0],
-      };
-    }
-
     if (!isOpen) {
       return {
         opacity: [1, 0],
         translateX: [0, 90],
+        zIndex: 0,
       };
     }
 
@@ -165,20 +153,27 @@ const NavigationGroup: FC = () => {
       </Box>
 
       <When condition={!curr}>
-        <IconButton
-          isRound
-          variant="solid"
-          bgColor="primary.blue"
-          aria-label="Navigation"
-          w="68px"
-          h="68px"
-          icon={
-            <Image src={lightningIcon} alt="Navigation" w="18px" h="32px" />
-          }
-          _hover={{ bgColor: 'primary.blue' }}
-          _active={{ bgColor: 'primary.blue' }}
-          onClick={handleIsOpen}
-        />
+        <motion.div
+          animate={{
+            scale: [0, 1],
+            opacity: [0, 1],
+          }}
+        >
+          <IconButton
+            isRound
+            variant="solid"
+            bgColor="primary.blue"
+            aria-label="Navigation"
+            w="68px"
+            h="68px"
+            icon={
+              <Image src={lightningIcon} alt="Navigation" w="18px" h="32px" />
+            }
+            _hover={{ bgColor: 'primary.blue' }}
+            _active={{ bgColor: 'primary.blue' }}
+            onClick={handleIsOpen}
+          />
+        </motion.div>
       </When>
     </Flex>
   );
