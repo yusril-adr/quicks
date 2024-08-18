@@ -10,28 +10,33 @@ import taskYellowIcon from '@utils/icons/task-yellow.svg';
 import taskWhiteIcon from '@utils/icons/task-white.svg';
 
 import Item from './item';
-import { Else, If, Then, When } from 'react-if';
+import { When } from 'react-if';
 import { NavigationName } from '@utils/constants/enum';
+import { useAppDispatch, useAppSelector } from '@hooks/redux';
+import {
+  setNavigationGroup,
+  unsetNavigationGroup,
+} from '@states/navigationGroup';
 
 const NavigationGroup: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [currState, setCurrState] = useState<string | null>(null);
-  const [prevState, setPrevState] = useState<string | null>(null);
   const [scopeTask, animateTask] = useAnimate();
   const [scopeInbox, animateInbox] = useAnimate();
+  const { isOpen, curr, prev } = useAppSelector(
+    (state) => state.navigationGroupReducer.value,
+  );
+
+  const dispatch = useAppDispatch();
 
   const handleIsOpen = () => {
     if (isOpen) {
-      setCurrState(null);
-      setPrevState(null);
-      setIsOpen(false);
+      dispatch(unsetNavigationGroup());
     } else {
-      setIsOpen(true);
+      dispatch(setNavigationGroup({ isOpen: true }));
     }
   };
 
   const taskVariant = useMemo(() => {
-    if (!isOpen && currState === NavigationName.TASK) {
+    if (!isOpen && curr === NavigationName.TASK) {
       return {
         opacity: [1, 0],
         translateX: [175, 0],
@@ -45,14 +50,14 @@ const NavigationGroup: FC = () => {
       };
     }
 
-    if (isOpen && currState === NavigationName.TASK) {
+    if (isOpen && curr === NavigationName.TASK) {
       return {
         translateX: [0, 86],
         zIndex: 999,
       };
     }
 
-    if (isOpen && currState === NavigationName.INBOX) {
+    if (isOpen && curr === NavigationName.INBOX) {
       return {
         translateX: [86, 0],
         zIndex: 999,
@@ -63,10 +68,10 @@ const NavigationGroup: FC = () => {
       opacity: [0, 1],
       translateX: [86, 0],
     };
-  }, [isOpen, currState]);
+  }, [isOpen, curr]);
 
   const inboxVariant = useMemo(() => {
-    if (!isOpen && currState === NavigationName.INBOX) {
+    if (!isOpen && curr === NavigationName.INBOX) {
       return {
         opacity: [1, 0],
         translateX: [90, 0],
@@ -80,29 +85,14 @@ const NavigationGroup: FC = () => {
       };
     }
 
-    if (
-      isOpen &&
-      currState === NavigationName.TASK &&
-      prevState === NavigationName.INBOX
-    ) {
+    if (isOpen && curr === NavigationName.TASK) {
       return {
         translateX: [0, -90],
         zIndex: 999,
       };
     }
 
-    if (
-      isOpen &&
-      currState === NavigationName.TASK &&
-      prevState !== NavigationName.INBOX
-    ) {
-      return {
-        translateX: [0, -90],
-        zIndex: 999,
-      };
-    }
-
-    if (isOpen && currState === NavigationName.INBOX) {
+    if (isOpen && curr === NavigationName.INBOX) {
       return {
         translateX: [-90, 0],
         zIndex: 999,
@@ -113,7 +103,7 @@ const NavigationGroup: FC = () => {
       opacity: [0, 1],
       translateX: [90, 0],
     };
-  }, [isOpen, currState]);
+  }, [isOpen, curr]);
 
   useEffect(() => {
     animateTask(scopeTask.current, taskVariant);
@@ -134,27 +124,28 @@ const NavigationGroup: FC = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <Box ref={scopeTask}>
+      <Box ref={scopeTask} translateX="175px" opacity="0">
         <Item
-          name="Task"
+          name={NavigationName.TASK}
           iconIdle={<Image src={taskYellowIcon} alt="Task" w="27px" h="27px" />}
           iconActive={
             <Image src={taskWhiteIcon} alt="Task" w="27px" h="27px" />
           }
           bgActive="#F8B76B"
           onClick={() =>
-            setCurrState((prev) => {
-              setPrevState(prev);
-              return NavigationName.TASK;
-            })
+            dispatch(
+              setNavigationGroup({
+                prev: curr,
+                curr: NavigationName.TASK,
+              }),
+            )
           }
-          active={currState === NavigationName.TASK}
         />
       </Box>
 
-      <Box ref={scopeInbox}>
+      <Box ref={scopeInbox} translateX="90px" opacity="0">
         <Item
-          name="Inbox"
+          name={NavigationName.INBOX}
           iconIdle={
             <Image src={inboxPurpleIcon} alt="Inbox" w="27px" h="27px" />
           }
@@ -163,16 +154,17 @@ const NavigationGroup: FC = () => {
           }
           bgActive="#8785FF"
           onClick={() =>
-            setCurrState((prev) => {
-              setPrevState(prev);
-              return NavigationName.INBOX;
-            })
+            dispatch(
+              setNavigationGroup({
+                prev: curr,
+                curr: NavigationName.INBOX,
+              }),
+            )
           }
-          active={currState === NavigationName.INBOX}
         />
       </Box>
 
-      <When condition={!currState}>
+      <When condition={!curr}>
         <IconButton
           isRound
           variant="solid"
