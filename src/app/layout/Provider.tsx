@@ -10,7 +10,7 @@ const ProviderLayout: FC<{
   children: ReactNode;
 }> = ({ children }) => (
   <ReduxProvider store={store}>
-    <ChakraProvider>{children}</ChakraProvider>;
+    <ChakraProvider>{children}</ChakraProvider>
   </ReduxProvider>
 );
 

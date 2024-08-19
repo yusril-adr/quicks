@@ -14,9 +14,7 @@ const ButtonItem: FC<{
 }> = ({ name, iconIdle, iconActive, bgActive, onClick }) => {
   const [boxShadowColor] = useToken('colors', ['primary.black.dark']);
 
-  const { curr } = useAppSelector(
-    (state) => state.navigationGroupReducer.value,
-  );
+  const { curr } = useAppSelector((state) => state.navigationGroup.value);
   const active = curr === name;
 
   const bgColor = active ? bgActive : '#F2F2F2';

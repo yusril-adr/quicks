@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import navigationGroupReducer from './navigationGroup';
+import chatsReducer from './chats';
 
 const store = configureStore({
   reducer: {
-    navigationGroupReducer: navigationGroupReducer,
+    navigationGroup: navigationGroupReducer,
+    chats: chatsReducer,
   },
 });
 
