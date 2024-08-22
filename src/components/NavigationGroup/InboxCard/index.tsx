@@ -40,7 +40,7 @@ const InboxCard: FC = () => {
 
   return (
     <Box h="100%">
-      <InputGroup>
+      {/* <InputGroup>
         <Input
           type="text"
           placeholder="Search"
@@ -55,7 +55,7 @@ const InboxCard: FC = () => {
             aria-label="search"
           />
         </InputRightElement>
-      </InputGroup>
+      </InputGroup> */}
 
       {/* <If condition={conversationStatus === StateStatus.SUCCESS}>
         <Then>
