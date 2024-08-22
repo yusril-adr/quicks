@@ -156,9 +156,9 @@ const NavigationGroup: FC = () => {
         border="2px solid #BDBDBD"
         maxH="737px"
         borderRadius="5px"
-        ps="29px"
-        pe="39px"
-        py="20px"
+        // ps="29px"
+        // pe="39px"
+        // py="20px"
         color="black"
         overflow="auto"
       >
