@@ -32,6 +32,7 @@ const ButtonItem: FC<{
           fontSize="12px"
           lineHeight="12px"
           mb="12px"
+          color="white"
         >
           {utils.capitalizeEachWord(name)}
         </Text>

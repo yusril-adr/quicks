@@ -19,6 +19,8 @@ const DefaultLayout: FC<{
       <Container
         as="main"
         maxW="8xl"
+        bgColor="gray.800"
+        color="white"
         minH={CONFIG.MIN_BODY_HEIGHT}
         onClick={() => dispatch(unsetNavigationGroup())}
       >

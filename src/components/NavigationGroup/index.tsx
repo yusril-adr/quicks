@@ -123,7 +123,7 @@ const NavigationGroup: FC = () => {
     if (!isPresent) {
       setTimeout(safeToRemove, 1000);
     }
-  }, [isPresent]);
+  }, [isPresent, safeToRemove]);
 
   return (
     <Flex
