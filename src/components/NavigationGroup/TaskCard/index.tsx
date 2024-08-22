@@ -18,12 +18,23 @@ import {
   Text,
   Input,
 } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { GoClock, GoKebabHorizontal, GoPencil } from 'react-icons/go';
 
+type CheckedItems = {
+  [key: number]: boolean;
+};
+
 const TaskCard: FC = () => {
+  const [checkedItems, setCheckedItems] = useState<CheckedItems>({});
+  const handleCheckboxChange = (index: number) => {
+    setCheckedItems((prev: CheckedItems) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
   const handleMenuButtonClick = (event: any) => {
-    event.stopPropagation(); // Prevents the click event from propagating to AccordionButton
+    event.stopPropagation();
   };
   return (
     <Box h="100%">
@@ -64,7 +75,7 @@ const TaskCard: FC = () => {
             <Accordion defaultIndex={[0]} allowMultiple>
               <AccordionItem>
                 <h2>
-                  <AccordionButton ps={0}>
+                  <AccordionButton>
                     <Box
                       as="div"
                       flex="1"
@@ -77,8 +88,16 @@ const TaskCard: FC = () => {
                         borderColor={'gray'}
                         colorScheme="transparent"
                         defaultChecked
+                        isChecked={!!checkedItems[0]}
+                        onChange={() => handleCheckboxChange(0)}
                       ></Checkbox>
-                      <Text>Cross-reference with Jeanne for Case #192813</Text>
+                      <Text
+                        textDecoration={
+                          checkedItems[0] ? 'line-through' : 'none'
+                        }
+                      >
+                        Cross-reference with Jeanne for Case #192813
+                      </Text>
                     </Box>
                     <Box
                       as="div"
@@ -113,13 +132,14 @@ const TaskCard: FC = () => {
                     </Menu>
                   </AccordionButton>
                 </h2>
-                <AccordionPanel pb={4}>
+                <AccordionPanel pb={4} px={10}>
                   <Box display="flex" flexDirection="column" gap={2}>
                     <Box
                       display="flex"
                       flexDirection="row"
                       alignItems="center"
                       gap="2"
+                      w="50%"
                     >
                       <GoClock size={20} color="#2F80ED" />
                       <Input
@@ -141,13 +161,13 @@ const TaskCard: FC = () => {
                         size="md"
                         type="text"
                         sx={{
-                          border: 'none', // No border when not focused
+                          border: 'none',
                           _focus: {
-                            border: '1px solid #828282', // Border when focused
-                            boxShadow: 'none', // Remove default focus shadow if needed
+                            border: '1px solid #828282',
+                            boxShadow: 'none',
                           },
                           _placeholder: {
-                            color: '#828282', // Optional: Change placeholder color
+                            color: '#828282',
                           },
                         }}
                       />
