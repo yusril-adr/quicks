@@ -1,6 +1,21 @@
 import { ChatType } from '@utils/constants/enum';
 
-const chats = [
+export type Chat = {
+  chat_id: string;
+  chat_type: ChatType;
+  group_name?: string;
+  group_avatar_url?: null | string;
+  participants: { user_id: string; username: string }[];
+  messages: {
+    message_id: string;
+    sender_id: string;
+    content: { type: string; text: string };
+    timestamp: string;
+    is_read_by: string[];
+  }[];
+};
+
+const chats: Chat[] = [
   {
     chat_id: 'c125',
     chat_type: ChatType.GROUP,
@@ -144,6 +159,14 @@ const ChatService = {
 
     return new Promise((resolve) => {
       setTimeout(() => resolve(conversations), 1000 * 3);
+    });
+  },
+
+  getChatById(chatId: string): Promise<Chat | undefined | null> {
+    const currentChat = chats.find((chat) => chat.chat_id === chatId);
+
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(currentChat), 1000 * 3);
     });
   },
 };

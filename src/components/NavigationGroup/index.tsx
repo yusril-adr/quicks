@@ -18,6 +18,7 @@ import {
   unsetNavigationGroup,
 } from '@states/navigationGroup';
 import InboxCard from './InboxCard';
+import TaskCard from './TaskCard';
 
 const NavigationGroup: FC = () => {
   const [isPresent, safeToRemove] = usePresence();
@@ -156,15 +157,15 @@ const NavigationGroup: FC = () => {
         border="2px solid #BDBDBD"
         maxH="737px"
         borderRadius="5px"
-        ps="29px"
-        pe="39px"
-        py="20px"
         color="black"
         overflow="auto"
       >
         <Switch>
           <Case condition={curr === NavigationName.INBOX}>
             <InboxCard />
+          </Case>
+          <Case condition={curr === NavigationName.TASK}>
+            <TaskCard />
           </Case>
         </Switch>
       </Box>

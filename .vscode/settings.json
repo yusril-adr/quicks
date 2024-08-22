@@ -1,6 +1,7 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": null,
+  "prettier.endOfLine": "lf",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

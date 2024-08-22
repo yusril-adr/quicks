@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getConversations } from './thunk';
+import { getChatById, getConversations } from './thunk';
 import { StateStatus } from '@utils/constants/enum';
-import { Conversation } from '@services/api/chats/ChatService';
+import { Conversation, Chat } from '@services/api/quicks/ChatService';
 
 export type StateType = {
   value: {
     conversations: Conversation[];
+    currentChat: Chat | null | undefined;
+    selectedChatId: string | null | undefined;
   };
   status: StateStatus;
   error: Error | null | unknown;
@@ -14,6 +16,8 @@ export type StateType = {
 export const initialState: StateType = {
   value: {
     conversations: [],
+    currentChat: null,
+    selectedChatId: null,
   },
   status: StateStatus.IDLE,
   error: null,
@@ -55,6 +59,37 @@ export const chatsSlicer = createSlice({
         value: {
           ...state.value,
           conversations: [],
+        },
+        error: action.payload,
+      };
+    });
+
+    // getChat
+    builder.addCase(getChatById.pending, (state, action) => ({
+      ...state,
+      status: StateStatus.PENDING,
+      value: {
+        ...state.value,
+        selectedChatId: action.meta.arg,
+      },
+    }));
+    builder.addCase(getChatById.fulfilled, (state, action) => ({
+      ...state,
+      error: initialState.error,
+      status: StateStatus.SUCCESS,
+      value: {
+        ...state.value,
+        currentChat: action.payload,
+      },
+    }));
+    builder.addCase(getChatById.rejected, (state, action) => {
+      return {
+        ...state,
+        status: StateStatus.REJECTED,
+        value: {
+          ...state.value,
+          currentChat: null,
+          selectedChatId: null,
         },
         error: action.payload,
       };
