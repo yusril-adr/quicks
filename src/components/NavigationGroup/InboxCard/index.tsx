@@ -24,6 +24,7 @@ import { ChatType, StateStatus } from '@utils/constants/enum';
 import dayjs from '@utils/libs/dayjs';
 import PersonIcon from '@utils/icons/person';
 import SearchIcon from '@utils/icons/search';
+import Chat from './Chat';
 
 const InboxCard: FC = () => {
   const {
@@ -56,7 +57,7 @@ const InboxCard: FC = () => {
         </InputRightElement>
       </InputGroup>
 
-      <If condition={conversationStatus === StateStatus.SUCCESS}>
+      {/* <If condition={conversationStatus === StateStatus.SUCCESS}>
         <Then>
           <VStack align="stretch">
             {conversations.map((conversation) => (
@@ -149,6 +150,7 @@ const InboxCard: FC = () => {
             ))}
           </VStack>
         </Then>
+
         <Else>
           <Flex
             flexDir="column"
@@ -168,7 +170,9 @@ const InboxCard: FC = () => {
             <Text>Loading Chats ...</Text>
           </Flex>
         </Else>
-      </If>
+      </If> */}
+
+      <Chat />
     </Box>
   );
 };
