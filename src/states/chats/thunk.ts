@@ -1,6 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import ChatService, { Conversation } from '@services/api/chats/ChatService';
+import ChatService, {
+  Chat,
+  Conversation,
+} from '@services/api/quicks/ChatService';
 
 export const getConversations = createAsyncThunk<
   Conversation[],
@@ -12,6 +15,21 @@ export const getConversations = createAsyncThunk<
   try {
     const conversations = await ChatService.getConversations(userId);
     return conversations;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
+
+export const getChatById = createAsyncThunk<
+  Chat | null | undefined,
+  string,
+  {
+    rejectValue: Error | unknown;
+  }
+>('chats/getChatById', async (chatId: string, { rejectWithValue }) => {
+  try {
+    const chat = await ChatService.getChatById(chatId);
+    return chat;
   } catch (error) {
     return rejectWithValue(error);
   }
