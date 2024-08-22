@@ -1,6 +1,6 @@
 'use client';
 import { FC, ReactNode } from 'react';
-import { Container, SkipNavLink } from '@chakra-ui/react';
+import { Box, Container, SkipNavLink } from '@chakra-ui/react';
 
 import CONFIG from '@utils/constants/config';
 import NavigationGroup from '@components/NavigationGroup';
@@ -14,20 +14,21 @@ const DefaultLayout: FC<{
 
   return (
     <>
-      <SkipNavLink zIndex="9999">Skip to content</SkipNavLink>
+      <Box bgColor="gray.800">
+        <SkipNavLink zIndex="9999">Skip to content</SkipNavLink>
 
-      <Container
-        as="main"
-        maxW="8xl"
-        bgColor="gray.800"
-        color="white"
-        minH={CONFIG.MIN_BODY_HEIGHT}
-        onClick={() => dispatch(unsetNavigationGroup())}
-      >
-        {children}
-      </Container>
+        <Container
+          as="main"
+          maxW="8xl"
+          color="white"
+          minH={CONFIG.MIN_BODY_HEIGHT}
+          onClick={() => dispatch(unsetNavigationGroup())}
+        >
+          {children}
+        </Container>
 
-      <NavigationGroup />
+        <NavigationGroup />
+      </Box>
     </>
   );
 };

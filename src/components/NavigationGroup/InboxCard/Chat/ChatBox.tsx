@@ -1,4 +1,14 @@
-import { AbsoluteCenter, Box, Divider, Flex, Text } from '@chakra-ui/react';
+import {
+  AbsoluteCenter,
+  Box,
+  Divider,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+} from '@chakra-ui/react';
 import React from 'react';
 import { GoKebabHorizontal } from 'react-icons/go';
 import { Case, Default, Switch, When } from 'react-if';
@@ -50,7 +60,23 @@ const ChatBox: React.FC<{
                 </Text>
                 <Text>19.00</Text>
               </Flex>
-              <GoKebabHorizontal />
+              <Menu isLazy>
+                <Flex alignItems="baseline">
+                  <MenuButton>
+                    <GoKebabHorizontal />
+                  </MenuButton>
+                  <MenuList border="1px" borderColor="#BDBDBD">
+                    <MenuItem
+                      textColor="#2F80ED"
+                      borderBottom="1px"
+                      borderColor="#BDBDBD"
+                    >
+                      Edit
+                    </MenuItem>
+                    <MenuItem textColor="#EB5757">Delete</MenuItem>
+                  </MenuList>
+                </Flex>
+              </Menu>
             </Flex>
           </Flex>
         </Case>
@@ -58,7 +84,23 @@ const ChatBox: React.FC<{
           <Flex direction="column" alignItems="end" w="100%">
             <Text textColor="#9B51E0">You</Text>
             <Flex gap="10px" textColor="#4F4F4F">
-              <GoKebabHorizontal />
+              <Menu isLazy>
+                <Flex alignItems="baseline">
+                  <MenuButton>
+                    <GoKebabHorizontal />
+                  </MenuButton>
+                  <MenuList border="1px" borderColor="#BDBDBD">
+                    <MenuItem
+                      textColor="#2F80ED"
+                      borderBottom="1px"
+                      borderColor="#BDBDBD"
+                    >
+                      Edit
+                    </MenuItem>
+                    <MenuItem textColor="#EB5757">Delete</MenuItem>
+                  </MenuList>
+                </Flex>
+              </Menu>
               <Flex
                 direction="column"
                 backgroundColor="#EEDCFF"
