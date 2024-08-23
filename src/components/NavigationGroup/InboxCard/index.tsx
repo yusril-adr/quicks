@@ -8,7 +8,6 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Spinner,
   Text,
   useToken,
   VStack,
@@ -17,12 +16,13 @@ import { FC, useEffect } from 'react';
 import { Case, Else, If, Switch, Then, When } from 'react-if';
 
 import { useAppDispatch, useAppSelector } from '@hooks/redux';
-import { getChatById, getConversations, unsetChats } from '@states/chats';
+import { getChatById, getConversations } from '@states/chats';
 import { ChatType, StateStatus } from '@utils/constants/enum';
 import dayjs from '@utils/libs/dayjs';
 import PersonIcon from '@utils/icons/person';
 import SearchIcon from '@utils/icons/search';
 import Chat from './Chat';
+import Loader from './Loader';
 
 const InboxCard: FC = () => {
   const {
@@ -31,14 +31,13 @@ const InboxCard: FC = () => {
   } = useAppSelector((state) => state.chats);
   const dispatch = useAppDispatch();
   const [primaryBlue] = useToken('colors', ['primary.blue']);
+  const { value: user } = useAppSelector((state) => state.authUser);
 
   useEffect(() => {
-    dispatch(getConversations('u125'));
-
-    return () => {
-      dispatch(unsetChats());
-    };
-  }, [dispatch]);
+    if (user && !selectedChatId) {
+      dispatch(getConversations(user?.user_id));
+    }
+  }, [dispatch, user, selectedChatId]);
 
   return (
     <Box h="100%">
@@ -147,9 +146,9 @@ const InboxCard: FC = () => {
 
                         <Box maxW="112px" ml="auto">
                           <Text fontSize="11px" color="primary.black.dark">
-                            {dayjs
-                              .utc(conversation.last_message.timestamp)
-                              .format('MM/DD/YYYY HH:mm')}
+                            {dayjs(conversation.last_message.timestamp).format(
+                              'MM/DD/YYYY HH:mm',
+                            )}
                           </Text>
                         </Box>
                       </Flex>
@@ -173,23 +172,7 @@ const InboxCard: FC = () => {
               </Then>
 
               <Else>
-                <Flex
-                  flexDir="column"
-                  justifyContent="center"
-                  alignItems="center"
-                  h="100%"
-                  gap="12px"
-                >
-                  <Spinner
-                    thickness="8px"
-                    speed="0.65s"
-                    emptyColor="#F8F8F8"
-                    color="#C4C4C4"
-                    w="86px"
-                    h="86px"
-                  />
-                  <Text>Loading Chats ...</Text>
-                </Flex>
+                <Loader />
               </Else>
             </If>
           </Box>

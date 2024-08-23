@@ -19,6 +19,70 @@ const chats: Chat[] = [
   {
     chat_id: 'c125',
     chat_type: ChatType.GROUP,
+    group_name: 'I-589 - AMARKHIL, Obaidullah [Affirmative Filing with ZHN]',
+    group_avatar_url: null,
+    participants: [
+      { user_id: 'u123', username: 'Mary Hilda' },
+      { user_id: 'u124', username: 'Obaidullah Amarkhil' },
+      { user_id: 'u125', username: 'User' },
+    ],
+    messages: [
+      {
+        message_id: 'm1',
+        sender_id: 'u125',
+        content: {
+          type: 'text',
+          text: 'No worries. It will be completed ASAP. I’ve asked him yesterday.',
+        },
+        timestamp: '2024-08-14T12:32:00Z',
+        is_read_by: ['u123', 'u124', 'u125'],
+      },
+      {
+        message_id: 'm2',
+        sender_id: 'u123',
+        content: {
+          type: 'text',
+          text: 'Hello Obaidullah, I will be your case advisor for case #029290. I have assigned some homework for you to fill. Please keep up with the due dates. Should you have any questions, you can message me anytime. Thanks.',
+        },
+        timestamp: '2024-08-15T07:05:00Z',
+        is_read_by: ['u123', 'u124', 'u125'],
+      },
+      {
+        message_id: 'm3',
+        sender_id: 'u125',
+        content: {
+          type: 'text',
+          text: 'Please contact Mary for questions regarding the case bcs she will be managing your forms from now on! Thanks Mary.',
+        },
+        timestamp: '2024-08-15T07:32:01Z',
+        is_read_by: ['u123', 'u124', 'u125'],
+      },
+      {
+        message_id: 'm4',
+        sender_id: 'u123',
+        content: {
+          type: 'text',
+          text: 'Sure thing, Claren',
+        },
+        timestamp: '2024-08-15T07:32:02Z',
+        is_read_by: ['u123', 'u124', 'u125'],
+      },
+
+      {
+        message_id: 'm5',
+        sender_id: 'u124',
+        content: {
+          type: 'text',
+          text: 'Morning. I’ll try to do them. Thanks',
+        },
+        timestamp: '2024-08-15T08:05:03Z',
+        is_read_by: ['u124'],
+      },
+    ],
+  },
+  {
+    chat_id: 'c125',
+    chat_type: ChatType.GROUP,
     group_name: '109220-Naturalization',
     group_avatar_url: null,
     participants: [

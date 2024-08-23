@@ -1,5 +1,10 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-dayjs.extend(utc);
+import relativeTime from 'dayjs/plugin/relativeTime';
+import isToday from 'dayjs/plugin/isToday';
 
-export default dayjs;
+dayjs.extend(utc);
+dayjs.extend(relativeTime);
+dayjs.extend(isToday);
+
+export default dayjs.utc;

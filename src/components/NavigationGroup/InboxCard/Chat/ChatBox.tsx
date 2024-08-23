@@ -13,18 +13,48 @@ import React from 'react';
 import { GoKebabHorizontal } from 'react-icons/go';
 import { Case, Default, Switch, When } from 'react-if';
 
+import dayjs from '@utils/libs/dayjs';
+
 const ChatBox: React.FC<{
   self: boolean;
   newMessage: boolean;
-  date: boolean;
-}> = ({ self, newMessage, date }) => {
+  newDate: boolean;
+  sender: string;
+  content: string;
+  bgColor: string;
+  nameColor: string;
+  timestamp: string;
+}> = ({
+  self,
+  newMessage,
+  newDate,
+  sender,
+  content,
+  bgColor,
+  nameColor,
+  timestamp,
+}) => {
+  const currentDate = dayjs(timestamp);
+  let dayLabel = currentDate.format('dddd');
+
+  if (newDate) {
+    const diffDate = currentDate.diff(dayjs(), 'D');
+    if (diffDate === 0) {
+      dayLabel = 'Today';
+    }
+
+    if (diffDate === 1) {
+      dayLabel = 'Yesterday';
+    }
+  }
+
   return (
     <>
-      <When condition={date}>
+      <When condition={newDate}>
         <Box position="relative" padding="10" textColor="#4F4F4F" w="100%">
           <Divider bgColor="#4F4F4F" h="2px" />
           <AbsoluteCenter bg="white" px="4">
-            Today June 09, 2021
+            {dayLabel} {currentDate.format('MMMM DD, YYYY')}
           </AbsoluteCenter>
         </Box>
       </When>
@@ -33,7 +63,7 @@ const ChatBox: React.FC<{
         <Case condition={!self}>
           <Box
             position="relative"
-            padding="10"
+            padding="28px"
             textColor="#EB5757"
             w="100%"
             display={newMessage ? 'block' : 'none'}
@@ -45,20 +75,21 @@ const ChatBox: React.FC<{
           </Box>
 
           <Flex direction="column" w="100%">
-            <Text textColor="#E5A443">Sugeng</Text>
+            <Text textColor={nameColor} fontSize="13px">
+              {sender}
+            </Text>
             <Flex gap="10px" textColor="#4F4F4F">
               <Flex
                 direction="column"
-                backgroundColor="#FCEED3"
+                backgroundColor={bgColor}
                 px="10px"
                 py="7px"
                 rounded="lg"
               >
-                <Text>
-                  No worries. It will be completed ASAP. I’ve asked him
-                  yesterday.
+                <Text fontSize="13px">{content}</Text>
+                <Text fontSize="9px" mt="12px">
+                  {currentDate.format('HH.mm')}
                 </Text>
-                <Text>19.00</Text>
               </Flex>
               <Menu isLazy>
                 <Flex alignItems="baseline">
@@ -80,9 +111,12 @@ const ChatBox: React.FC<{
             </Flex>
           </Flex>
         </Case>
+
         <Default>
           <Flex direction="column" alignItems="end" w="100%">
-            <Text textColor="#9B51E0">You</Text>
+            <Text textColor={nameColor} fontSize="13px">
+              You
+            </Text>
             <Flex gap="10px" textColor="#4F4F4F">
               <Menu isLazy>
                 <Flex alignItems="baseline">
@@ -103,16 +137,15 @@ const ChatBox: React.FC<{
               </Menu>
               <Flex
                 direction="column"
-                backgroundColor="#EEDCFF"
+                backgroundColor={bgColor}
                 px="10px"
                 py="7px"
                 rounded="lg"
               >
-                <Text>
-                  No worries. It will be completed ASAP. I’ve asked him
-                  yesterday.
+                <Text fontSize="13px">{content}</Text>
+                <Text fontSize="9px" mt="12px">
+                  {currentDate.format('HH.mm')}
                 </Text>
-                <Text>19.00</Text>
               </Flex>
             </Flex>
           </Flex>

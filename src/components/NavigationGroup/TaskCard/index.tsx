@@ -1,4 +1,4 @@
-import { ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
   Accordion,
   AccordionButton,
