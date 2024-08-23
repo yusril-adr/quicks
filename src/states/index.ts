@@ -3,12 +3,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import authUserReducer from './authUser';
 import navigationGroupReducer from './navigationGroup';
 import chatsReducer from './chats';
+import tasksReducer from './tasks';
 
 const store = configureStore({
   reducer: {
     authUser: authUserReducer,
     navigationGroup: navigationGroupReducer,
     chats: chatsReducer,
+    tasks: tasksReducer,
   },
 });
 
